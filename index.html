@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementary Math Glossary · 小学数学词汇表 (Grades 1–6)</title>
+    <!-- pinyin library -->
+    <script src="https://unpkg.com/pinyin@2.9.0/lib/web-pinyin.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f9fbfd;
+            color: #1e2b3c;
+            line-height: 1.5;
+            padding: 1.5rem;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0,20,40,0.25);
+            padding: 2rem 2rem 2.5rem;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #b3d9ff;
+            padding-bottom: 1.5rem;
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: #0b3954;
+        }
+        h1 small {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #2a6477;
+            display: block;
+            margin-top: 0.3rem;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .controls input, .controls button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 40px;
+            border: 1px solid #b3d9ff;
+            background: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .controls input {
+            flex: 1 1 250px;
+            min-width: 200px;
+            border: 2px solid #b3d9ff;
+        }
+        .controls button {
+            background: #1f5068;
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+        .controls button:hover {
+            background: #0b3954;
+            transform: translateY(-2px);
+        }
+        .flashcard-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        .flashcard {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: #fff3db;
+            border-radius: 40px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 2px solid #ffb347;
+            margin-bottom: 2rem;
+        }
+        .flashcard:hover {
+            transform: scale(1.02);
+        }
+        .flashcard .eng {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1f5068;
+        }
+        .flashcard .chi {
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: #2d6d8a;
+            margin-top: 1rem;
+        }
+        .flashcard .example {
+            font-size: 1.2rem;
+            color: #3f5465;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+        .flashcard-controls {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .flashcard-controls button {
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 40px;
+            border: none;
+            background: #1f5068;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .flashcard-controls button:disabled {
+            background: #a0b8c7;
+            cursor: not-allowed;
+        }
+        .flashcard-controls #toggleFront {
+            background: #ff9f4b;
+            color: #1e2b3c;
+        }
+        .toc {
+            background: #e3f0fa;
+            border-radius: 40px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem 3rem;
+        }
+        .toc a {
+            font-size: 1.3rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #0b4b6b;
+            background: white;
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            box-shadow: 0 4px 6px rgba(0,30,50,0.1);
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .toc a:hover {
+            background: #ffe68f;
+            border-color: #cb9e2b;
+            transform: translateY(-2px);
+        }
+        section {
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 1.5rem;
+        }
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            border-left: 12px solid #3a9bdc;
+            padding-left: 1.2rem;
+            margin-bottom: 1.8rem;
+            color: #163a4f;
+        }
+        h2 .chi {
+            font-size: 1.7rem;
+            font-weight: 300;
+            color: #2d6d8a;
+            margin-left: 0.8rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,32,64,0.08);
+            margin-bottom: 1rem;
+        }
+        th {
+            background: #1f5068;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 1rem 1.2rem;
+            text-align: left;
+        }
+        th:first-child { border-radius: 16px 0 0 0; }
+        th:last-child { border-radius: 0 16px 0 0; }
+        td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #d4e2ed;
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .icon-cell {
+            font-size: 1.6rem;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            width: 50px;
+        }
+        .icon-cell svg {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+        .eng-term {
+            font-weight: 600;
+            color: #0b3b4f;
+            font-size: 1.1rem;
+        }
+        .chi-term {
+            font-weight: 500;
+            color: #1d5a7a;
+        }
+        .example {
+            color: #3f5465;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .example i {
+            color: #2d7e9b;
+        }
+        .speaker {
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 1.2rem;
+            display: inline-block;
+            transition: 0.1s;
+        }
+        .speaker:hover {
+            transform: scale(1.2);
+            color: #ff8c42;
+        }
+        ruby {
+            ruby-align: center;
+        }
+        rt {
+            font-size: 0.8rem;
+            color: #555;
+            font-weight: normal;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8fcff;
+        }
+        tbody tr:hover {
+            background-color: #fffbdf;
+        }
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 1rem;
+            color: #5a768a;
+            border-top: 2px dashed #b0cfeb;
+            padding-top: 2rem;
+        }
+        .footnote {
+            background: #e5f0f9;
+            border-radius: 30px;
+            padding: 1.2rem;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+        }
+        @media (max-width: 700px) {
+            body { padding: 0.8rem; }
+            h1 { font-size: 2rem; }
+            .toc { flex-direction: column; align-items: center; gap: 0.8rem; }
+            .toc a { width: 100%; text-align: center; }
+            th, td { padding: 0.8rem; }
+            .icon-cell { font-size: 1.2rem; width: 30px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>📐 Elementary Math Glossary <span style="font-weight:300;">·</span> 小学数学词汇表</h1>
+        <p style="font-size:1.3rem; color:#2e6a88;">Grades 1–6  |  一年级至六年级</p>
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="🔍 Search English or Chinese... 搜索英文或中文...">
+            <button id="flashcardBtn">🃏 Flashcard Mode</button>
+            <button id="glossaryBtn" style="display:none;">📖 Back to Glossary</button>
+        </div>
+    </header>
+
+    <!-- Flashcard view -->
+    <div id="flashcardContainer" class="flashcard-container">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+            <div id="cardEnglish" class="eng">English</div>
+            <div id="cardChinese" class="chi" style="display: none;"></div>
+            <div id="cardExample" class="example" style="display: none;"></div>
+        </div>
+        <div class="flashcard-controls">
+            <button id="prevCard" disabled>◀ Previous</button>
+            <button id="shuffleCards">🔄 Shuffle</button>
+            <button id="nextCard">Next ▶</button>
+            <button id="toggleFront">Front: English</button>
+        </div>
+        <p id="cardCount">1 / 1</p>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc" id="toc">
+        <a href="#basics">1. Basics & Number Sense<br>基础与数感</a>
+        <a href="#addsub">2. Addition & Subtraction<br>加法与减法</a>
+        <a href="#multdiv">3. Multiplication & Division<br>乘法与除法</a>
+        <a href="#geometry">4. Geometry<br>几何</a>
+        <a href="#measurement">5. Measurement & Data<br>测量与数据</a>
+    </div>
+
+    <!-- All glossary sections -->
+    <div id="glossarySections">
+        <!-- SECTION 1 – BASICS -->
+        <section id="basics">
+            <h2>1. Basics & Number Sense <span class="chi">基础与数感</span></h2>
+            <table class="glossary-table">
+                <thead><tr><th>English</th><th>简体中文</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td class="eng-term">Number</td><td class="chi-term">数字</td><td class="example">0, 1, 2, 3...</td></tr>
+                    <tr><td class="eng-term">Digit</td><td class="chi-term">数位</td><td class="example">The digits 0‑9.</td></tr>
+                    <tr><td class="eng-term">Place value</td><td class="chi-term">位值</td><td class="example">In 342, the 3 means 3 hundreds.</td></tr>
+                    <tr><td class="eng-term">Greater than</td><td class="chi-term">大于</td><td class="example">7 > 5</td></tr>
+                    <tr><td class="eng-term">Less than</td><td class="chi-term">小于</td><td class="example">4 < 9</td></tr>
+                    <tr><td class="eng-term">Equal</td><td class="chi-term">等于</td><td class="example">6 = 6</td></tr>
+                    <tr><td class="eng-term">Odd number</td><td class="chi-term">奇数</td><td class="example">1, 3, 5...</td></tr>
+                    <tr><td class="eng-term">Even number</td><td class="chi-term">偶数</td><td class="example">2, 4, 6...</td></tr>
+                    <tr><td class="eng-term">Fraction</td><td class="chi-term">分数</td><td class="example">½ , ¾</td></tr>
+                    <tr><td class="eng-term">Whole number</td><td class="chi-term">整数</td><td class="example">0, 1, 2, 3...</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECTION 2 – ADDITION & SUBTRACTION -->
+        <section id="addsub">
+            <h2>2. Addition & Subtraction <span class="chi">加法与减法</span></h2>
+            <table class="glossary-table">
+                <thead><tr><th>English</th><th>简体中文</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td class="eng-term">Add</td><td class="chi-term">加</td><td class="example">2 + 3 = 5</td></tr>
+                    <tr><td class="eng-term">Sum</td><td class="chi-term">和</td><td class="example">The sum of 4 and 6 is 10.</td></tr>
+                    <tr><td class="eng-term">Plus</td><td class="chi-term">加号</td><td class="example">7 + 2</td></tr>
+                    <tr><td class="eng-term">Subtract</td><td class="chi-term">减</td><td class="example">9 – 4 = 5</td></tr>
+                    <tr><td class="eng-term">Difference</td><td class="chi-term">差</td><td class="example">The difference of 8 and 3 is 5.</td></tr>
+                    <tr><td class="eng-term">Minus</td><td class="chi-term">减号</td><td class="example">10 – 7</td></tr>
+                    <tr><td class="eng-term">Addend</td><td class="chi-term">加数</td><td class="example">In 3 + 5, 3 and 5 are addends.</td></tr>
+                    <tr><td class="eng-term">Equals</td><td class="chi-term">等于</td><td class="example">2 + 2 = 4</td></tr>
+                    <tr><td class="eng-term">Number sentence</td><td class="chi-term">算式</td><td class="example">5 + 3 = 8</td></tr>
+                    <tr><td class="eng-term">Regroup</td><td class="chi-term">进位 / 借位</td><td class="example">In 27+8, regroup 10 ones as 1 ten.</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECTION 3 – MULTIPLICATION & DIVISION -->
+        <section id="multdiv">
+            <h2>3. Multiplication & Division <span class="chi">乘法与除法</span></h2>
+            <table class="glossary-table">
+                <thead><tr><th>English</th><th>简体中文</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td class="eng-term">Multiply</td><td class="chi-term">乘</td><td class="example">4 × 3 = 12</td></tr>
+                    <tr><td class="eng-term">Product</td><td class="chi-term">积</td><td class="example">The product of 5 and 6 is 30.</td></tr>
+                    <tr><td class="eng-term">Times</td><td class="chi-term">倍</td><td class="example">3 times 4 is 12.</td></tr>
+                    <tr><td class="eng-term">Factor</td><td class="chi-term">因数</td><td class="example">2 and 6 are factors of 12.</td></tr>
+                    <tr><td class="eng-term">Divide</td><td class="chi-term">除</td><td class="example">15 ÷ 3 = 5</td></tr>
+                    <tr><td class="eng-term">Quotient</td><td class="chi-term">商</td><td class="example">In 20 ÷ 4, the quotient is 5.</td></tr>
+                    <tr><td class="eng-term">Remainder</td><td class="chi-term">余数</td><td class="example">22 ÷ 5 = 4 R2</td></tr>
+                    <tr><td class="eng-term">Multiple</td><td class="chi-term">倍数</td><td class="example">15 is a multiple of 3.</td></tr>
+                    <tr><td class="eng-term">Array</td><td class="chi-term">阵列</td><td class="example">Rows and columns of objects.</td></tr>
+                    <tr><td class="eng-term">Equal groups</td><td class="chi-term">等量分组</td><td class="example">3 groups of 4.</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECTION 4 – GEOMETRY (with icons) -->
+        <section id="geometry">
+            <h2>4. Geometry <span class="chi">几何</span></h2>
+            <table class="glossary-table">
+                <thead><tr><th>Icon</th><th>English</th><th>简体中文</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td class="icon-cell">⚫</td><td class="eng-term">Point</td><td class="chi-term">点</td><td class="example">A location in space. •</td></tr>
+                    <tr><td class="icon-cell"><svg width="24" height="12" viewBox="0 0 24 12"><line x1="2" y1="6" x2="22" y2="6" stroke="black" stroke-width="1.5"/><polygon points="2,3 2,9 6,6" fill="black"/><polygon points="22,3 22,9 18,6" fill="black"/></svg></td><td class="eng-term">Line</td><td class="chi-term">线</td><td class="example">A straight path that goes on forever.</td></tr>
+                    <tr><td class="icon-cell"><svg width="24" height="12" viewBox="0 0 24 12"><circle cx="4" cy="6" r="2" fill="black"/><circle cx="20" cy="6" r="2" fill="black"/><line x1="4" y1="6" x2="20" y2="6" stroke="black" stroke-width="2"/></svg></td><td class="eng-term">Line segment</td><td class="chi-term">线段</td><td class="example">Part of a line with two endpoints.</td></tr>
+                    <tr><td class="icon-cell"><svg width="24" height="12" viewBox="0 0 24 12"><circle cx="4" cy="6" r="2" fill="black"/><line x1="4" y1="6" x2="18" y2="6" stroke="black" stroke-width="2"/><polygon points="18,3 18,9 22,6" fill="black"/></svg></td><td class="eng-term">Ray</td><td class="chi-term">射线</td><td class="example">One endpoint, goes forever one way.</td></tr>
+                    <tr><td class="icon-cell">∠</td><td class="eng-term">Angle</td><td class="chi-term">角</td><td class="example">Two rays from the same vertex.</td></tr>
+                    <tr><td class="icon-cell">⬤</td><td class="eng-term">Vertex / Vertices</td><td class="chi-term">顶点</td><td class="example">Corner of a shape.</td></tr>
+                    <tr><td class="icon-cell">—</td><td class="eng-term">Side</td><td class="chi-term">边</td><td class="example">A straight line that makes part of a shape.</td></tr>
+                    <tr><td class="icon-cell">🔲</td><td class="eng-term">Face</td><td class="chi-term">面</td><td class="example">A flat surface of a 3D shape.</td></tr>
+                    <tr><td class="icon-cell">—</td><td class="eng-term">Edge</td><td class="chi-term">棱</td><td class="example">Where two faces meet on a 3D shape.</td></tr>
+                    <tr><td class="icon-cell">∟</td><td class="eng-term">Right angle</td><td class="chi-term">直角</td><td class="example">90° (like a square corner).</td></tr>
+                    <tr><td class="icon-cell">∥</td><td class="eng-term">Parallel</td><td class="chi-term">平行</td><td class="example">Lines that never meet.</td></tr>
+                    <tr><td class="icon-cell">⟂</td><td class="eng-term">Perpendicular</td><td class="chi-term">垂直</td><td class="example">Lines that meet at a right angle.</td></tr>
+                    <tr><td class="icon-cell">✕</td><td class="eng-term">Intersecting lines</td><td class="chi-term">相交线</td><td class="example">Lines that cross each other.</td></tr>
+                    <tr><td class="icon-cell">—</td><td class="eng-term">Horizontal</td><td class="chi-term">水平的</td><td class="example">Going left to right.</td></tr>
+                    <tr><td class="icon-cell">|</td><td class="eng-term">Vertical</td><td class="chi-term">垂直的</td><td class="example">Going straight up and down.</td></tr>
+                    <tr><td class="icon-cell">/</td><td class="eng-term">Diagonal</td><td class="chi-term">对角线的</td><td class="example">Slanted line.</td></tr>
+                    <tr><td class="icon-cell">⬛</td><td class="eng-term">Closed shape</td><td class="chi-term">封闭图形</td><td class="example">A shape that starts and ends at the same point.</td></tr>
+                    <tr><td class="icon-cell">– –</td><td class="eng-term">Open shape</td><td class="chi-term">开放图形</td><td class="example">A shape that does not start and end at the same point.</td></tr>
+                    <tr><td class="icon-cell">⬟</td><td class="eng-term">Polygon</td><td class="chi-term">多边形</td><td class="example">Closed shape with straight sides.</td></tr>
+                    <tr><td class="icon-cell">🔺</td><td class="eng-term">Triangle</td><td class="chi-term">三角形</td><td class="example">3 sides, 3 angles.</td></tr>
+                    <tr><td class="icon-cell">🔲</td><td class="eng-term">Quadrilateral</td><td class="chi-term">四边形</td><td class="example">4 sides.</td></tr>
+                    <tr><td class="icon-cell">⬟</td><td class="eng-term">Pentagon</td><td class="chi-term">五边形</td><td class="example">5 sides.</td></tr>
+                    <tr><td class="icon-cell">⬣</td><td class="eng-term">Hexagon</td><td class="chi-term">六边形</td><td class="example">6 sides.</td></tr>
+                    <tr><td class="icon-cell">🛑</td><td class="eng-term">Octagon</td><td class="chi-term">八边形</td><td class="example">8 sides.</td></tr>
+                    <tr><td class="icon-cell">▭</td><td class="eng-term">Rectangle</td><td class="chi-term">长方形</td><td class="example">4 right angles, opposite sides equal.</td></tr>
+                    <tr><td class="icon-cell">🔲</td><td class="eng-term">Square</td><td class="chi-term">正方形</td><td class="example">All sides equal, 4 right angles.</td></tr>
+                    <tr><td class="icon-cell">◇</td><td class="eng-term">Rhombus</td><td class="chi-term">菱形</td><td class="example">All sides equal, opposite sides parallel.</td></tr>
+                    <tr><td class="icon-cell">▱</td><td class="eng-term">Parallelogram</td><td class="chi-term">平行四边形</td><td class="example">Opposite sides parallel and equal.</td></tr>
+                    <tr><td class="icon-cell">⏢</td><td class="eng-term">Trapezoid</td><td class="chi-term">梯形</td><td class="example">At least one pair of parallel sides.</td></tr>
+                    <tr><td class="icon-cell">🪁</td><td class="eng-term">Kite</td><td class="chi-term">风筝形</td><td class="example">Two pairs of equal sides next to each other.</td></tr>
+                    <tr><td class="icon-cell">⚪</td><td class="eng-term">Circle</td><td class="chi-term">圆形</td><td class="example">Round, all points same distance from center.</td></tr>
+                    <tr><td class="icon-cell">⨀</td><td class="eng-term">Center</td><td class="chi-term">圆心</td><td class="example">The middle point of a circle.</td></tr>
+                    <tr><td class="icon-cell">⦁→</td><td class="eng-term">Radius</td><td class="chi-term">半径</td><td class="example">Distance from center to edge.</td></tr>
+                    <tr><td class="icon-cell">↔</td><td class="eng-term">Diameter</td><td class="chi-term">直径</td><td class="example">Across the circle through center (2 × radius).</td></tr>
+                    <tr><td class="icon-cell">⭕</td><td class="eng-term">Circumference</td><td class="chi-term">圆周</td><td class="example">The distance around a circle.</td></tr>
+                    <tr><td class="icon-cell">⌒</td><td class="eng-term">Arc</td><td class="chi-term">弧</td><td class="example">Part of a circle's edge.</td></tr>
+                    <tr><td class="icon-cell">◡</td><td class="eng-term">Semicircle</td><td class="chi-term">半圆</td><td class="example">Half of a circle.</td></tr>
+                    <tr><td class="icon-cell">◼️</td><td class="eng-term">Area</td><td class="chi-term">面积</td><td class="example">The space inside a shape.</td></tr>
+                    <tr><td class="icon-cell">🧊</td><td class="eng-term">Volume</td><td class="chi-term">体积</td><td class="example">The space inside a 3D shape.</td></tr>
+                    <tr><td class="icon-cell">📦</td><td class="eng-term">Rectangular prism</td><td class="chi-term">长方体</td><td class="example">Box with 6 rectangular faces.</td></tr>
+                    <tr><td class="icon-cell">⚽</td><td class="eng-term">Sphere</td><td class="chi-term">球体</td><td class="example">Ball shape.</td></tr>
+                    <tr><td class="icon-cell">🥫</td><td class="eng-term">Cylinder</td><td class="chi-term">圆柱体</td><td class="example">Like a can.</td></tr>
+                    <tr><td class="icon-cell">🍦</td><td class="eng-term">Cone</td><td class="chi-term">圆锥体</td><td class="example">Ice-cream cone shape.</td></tr>
+                    <tr><td class="icon-cell">📏</td><td class="eng-term">Ruler</td><td class="chi-term">直尺</td><td class="example">Tool for measuring length.</td></tr>
+                    <tr><td class="icon-cell">📐</td><td class="eng-term">Protractor</td><td class="chi-term">量角器</td><td class="example">Tool for measuring angles.</td></tr>
+                    <tr><td class="icon-cell">(·,·)</td><td class="eng-term">Coordinate</td><td class="chi-term">坐标</td><td class="example">A pair of numbers that shows a position.</td></tr>
+                    <tr><td class="icon-cell">→</td><td class="eng-term">Slide / Translation</td><td class="chi-term">平移</td><td class="example">Moving a shape without turning it.</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECTION 5 – MEASUREMENT & DATA -->
+        <section id="measurement">
+            <h2>5. Measurement & Data <span class="chi">测量与数据</span></h2>
+            <table class="glossary-table">
+                <thead><tr><th>English</th><th>简体中文</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td class="eng-term">Length</td><td class="chi-term">长度</td><td class="example">How long something is.</td></tr>
+                    <tr><td class="eng-term">Width</td><td class="chi-term">宽度</td><td class="example">How wide something is.</td></tr>
+                    <tr><td class="eng-term">Height</td><td class="chi-term">高度</td><td class="example">How tall something is.</td></tr>
+                    <tr><td class="eng-term">Weight</td><td class="chi-term">重量</td><td class="example">How heavy something is.</td></tr>
+                    <tr><td class="eng-term">Mass</td><td class="chi-term">质量</td><td class="example">The amount of matter.</td></tr>
+                    <tr><td class="eng-term">Capacity</td><td class="chi-term">容量</td><td class="example">How much a container can hold.</td></tr>
+                    <tr><td class="eng-term">Time</td><td class="chi-term">时间</td><td class="example">Seconds, minutes, hours.</td></tr>
+                    <tr><td class="eng-term">Temperature</td><td class="chi-term">温度</td><td class="example">Degrees Celsius or Fahrenheit.</td></tr>
+                    <tr><td class="eng-term">Graph</td><td class="chi-term">图表</td><td class="example">Bar graph, pictograph.</td></tr>
+                    <tr><td class="eng-term">Data</td><td class="chi-term">数据</td><td class="example">Information collected.</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <p>✏️ Created for elementary students (Grades 1–6) · 供小学生使用（一年级至六年级）</p>
+        <p>Based on NYSED reference & common core terminology · 参考纽约州教育部词汇</p>
+        <div class="footnote">
+            ⭐ <strong>Features:</strong> Pinyin, text-to-speech (click 🔊), search, flashcard mode with shuffle, visual icons for geometry, and front-language toggle.<br>
+            ⭐ <strong>使用方法：</strong> 拼音、点击🔊发声、搜索、抽认卡模式（可随机排序、切换正反面语言），几何部分配有图标。
+        </div>
+    </footer>
+</div>
+
+<script>
+    (function() {
+        // ---------- Data collection ----------
+        let glossaryData = [];
+        const sections = document.querySelectorAll('#glossarySections section');
+        sections.forEach(section => {
+            const sectionName = section.querySelector('h2').innerText.split(' ')[1]; // rough, but okay
+            const rows = section.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                let english, chinese, example, icon = '';
+                if (section.id === 'geometry') {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 4) {
+                        icon = cells[0].innerText.trim() || cells[0].querySelector('svg') ? 'icon' : '';
+                        english = cells[1].innerText.trim();
+                        chinese = cells[2].innerText.trim();
+                        example = cells[3].innerText.trim();
+                    }
+                } else {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 3) {
+                        english = cells[0].innerText.trim();
+                        chinese = cells[1].innerText.trim();
+                        example = cells[2].innerText.trim();
+                    }
+                }
+                if (english && chinese) {
+                    glossaryData.push({
+                        english: english,
+                        chinese: chinese,
+                        example: example,
+                        section: section.id
+                    });
+                }
+            });
+        });
+
+        // ---------- Flashcard state ----------
+        let currentIndex = 0;
+        let flashcardMode = false;
+        let shuffledIndices = [];
+        let frontIsEnglish = true;      // true = English on front, false = Chinese on front
+        let isFlipped = false;          // false = showing front, true = showing back
+
+        // DOM elements
+        const flashcardContainer = document.getElementById('flashcardContainer');
+        const flashcardBtn = document.getElementById('flashcardBtn');
+        const glossaryBtn = document.getElementById('glossaryBtn');
+        const cardEnglish = document.getElementById('cardEnglish');
+        const cardChinese = document.getElementById('cardChinese');
+        const cardExample = document.getElementById('cardExample');
+        const prevBtn = document.getElementById('prevCard');
+        const nextBtn = document.getElementById('nextCard');
+        const shuffleBtn = document.getElementById('shuffleCards');
+        const toggleFrontBtn = document.getElementById('toggleFront');
+        const cardCount = document.getElementById('cardCount');
+        const searchInput = document.getElementById('searchInput');
+
+        // ---------- Helper: show card at index (respecting front language & flipped state) ----------
+        function showCard(index) {
+            if (!flashcardMode || glossaryData.length === 0) return;
+            let dataIndex;
+            if (shuffledIndices.length > 0 && index < shuffledIndices.length) {
+                dataIndex = shuffledIndices[index];
+            } else {
+                dataIndex = index % glossaryData.length;
+            }
+            const item = glossaryData[dataIndex];
+            cardEnglish.innerText = item.english;
+            cardChinese.innerText = item.chinese;
+            cardExample.innerText = item.example;
+
+            // Reset to front (not flipped) when changing card
+            isFlipped = false;
+            updateCardDisplay();
+
+            // Update buttons
+            prevBtn.disabled = (index === 0);
+            nextBtn.disabled = (index === (shuffledIndices.length ? shuffledIndices.length - 1 : glossaryData.length - 1));
+            cardCount.innerText = `${index+1} / ${shuffledIndices.length || glossaryData.length}`;
+        }
+
+        // Update visibility based on frontIsEnglish and isFlipped
+        function updateCardDisplay() {
+            if (!flashcardMode) return;
+            if (frontIsEnglish) {
+                if (!isFlipped) { // front: English
+                    cardEnglish.style.display = 'block';
+                    cardChinese.style.display = 'none';
+                    cardExample.style.display = 'none';
+                } else { // back: Chinese + example
+                    cardEnglish.style.display = 'none';
+                    cardChinese.style.display = 'block';
+                    cardExample.style.display = 'block';
+                }
+            } else {
+                if (!isFlipped) { // front: Chinese
+                    cardEnglish.style.display = 'none';
+                    cardChinese.style.display = 'block';
+                    cardExample.style.display = 'none';   // usually example on back only
+                } else { // back: English + example
+                    cardEnglish.style.display = 'block';
+                    cardChinese.style.display = 'none';
+                    cardExample.style.display = 'block';
+                }
+            }
+        }
+
+        // Flip card
+        window.flipCard = function() {
+            if (!flashcardMode) return;
+            isFlipped = !isFlipped;
+            updateCardDisplay();
+        };
+
+        // ---------- Navigation ----------
+        function nextCard() {
+            if (!flashcardMode) return;
+            if (shuffledIndices.length) {
+                if (currentIndex < shuffledIndices.length - 1) {
+                    currentIndex++;
+                    showCard(currentIndex);
+                }
+            } else {
+                if (currentIndex < glossaryData.length - 1) {
+                    currentIndex++;
+                    showCard(currentIndex);
+                }
+            }
+        }
+
+        function prevCard() {
+            if (!flashcardMode) return;
+            if (currentIndex > 0) {
+                currentIndex--;
+                showCard(currentIndex);
+            }
+        }
+
+        function shuffleCards() {
+            if (!flashcardMode) return;
+            // create shuffled order of all indices
+            shuffledIndices = Array.from({length: glossaryData.length}, (_, i) => i);
+            for (let i = shuffledIndices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
+            }
+            currentIndex = 0;
+            showCard(currentIndex);
+        }
+
+        // Toggle front language
+        function toggleFront() {
+            frontIsEnglish = !frontIsEnglish;
+            toggleFrontBtn.innerText = frontIsEnglish ? 'Front: English' : 'Front: 中文';
+            // Reset to front (unflipped) and refresh display
+            isFlipped = false;
+            updateCardDisplay();
+        }
+
+        // ---------- Flashcard mode on/off ----------
+        function enterFlashcardMode() {
+            flashcardMode = true;
+            flashcardContainer.style.display = 'flex';
+            glossaryBtn.style.display = 'inline-block';
+            flashcardBtn.style.display = 'none';
+            // reset to linear order
+            shuffledIndices = [];
+            currentIndex = 0;
+            frontIsEnglish = true;      // default
+            toggleFrontBtn.innerText = 'Front: English';
+            isFlipped = false;
+            showCard(0);
+        }
+
+        function exitFlashcardMode() {
+            flashcardMode = false;
+            flashcardContainer.style.display = 'none';
+            glossaryBtn.style.display = 'none';
+            flashcardBtn.style.display = 'inline-block';
+        }
+
+        // ---------- Event listeners ----------
+        flashcardBtn.addEventListener('click', enterFlashcardMode);
+        glossaryBtn.addEventListener('click', exitFlashcardMode);
+        prevBtn.addEventListener('click', prevCard);
+        nextBtn.addEventListener('click', nextCard);
+        shuffleBtn.addEventListener('click', shuffleCards);
+        toggleFrontBtn.addEventListener('click', toggleFront);
+
+        // Search (filter table rows)
+        searchInput.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const tables = document.querySelectorAll('.glossary-table');
+            tables.forEach(table => {
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const text = row.innerText.toLowerCase();
+                    if (text.includes(term)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // ---------- Pinyin and speakers ----------
+        function addPinyinAndSpeakers() {
+            const chiCells = document.querySelectorAll('.chi-term');
+            chiCells.forEach(cell => {
+                const chineseText = cell.innerText.trim();
+                if (!chineseText) return;
+                // pinyin
+                if (window.pinyin) {
+                    const pinyinText = window.pinyin(chineseText, { style: window.pinyin.STYLE_TONE, segment: true }).join(' ');
+                    const ruby = document.createElement('ruby');
+                    ruby.innerHTML = `${chineseText}<rt>${pinyinText}</rt>`;
+                    cell.innerHTML = '';
+                    cell.appendChild(ruby);
+                }
+                // speaker
+                const speaker = document.createElement('span');
+                speaker.className = 'speaker';
+                speaker.innerHTML = '🔊';
+                speaker.style.marginLeft = '8px';
+                speaker.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const utterance = new SpeechSynthesisUtterance(chineseText);
+                    utterance.lang = 'zh-CN';
+                    speechSynthesis.speak(utterance);
+                });
+                cell.appendChild(speaker);
+            });
+            // English speakers
+            const engCells = document.querySelectorAll('.eng-term');
+            engCells.forEach(cell => {
+                const engText = cell.innerText.trim();
+                if (!engText) return;
+                const speaker = document.createElement('span');
+                speaker.className = 'speaker';
+                speaker.innerHTML = '🔊';
+                speaker.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const utterance = new SpeechSynthesisUtterance(engText);
+                    utterance.lang = 'en-US';
+                    speechSynthesis.speak(utterance);
+                });
+                cell.appendChild(speaker);
+            });
+        }
+
+        // Call after page load
+        window.addEventListener('load', addPinyinAndSpeakers);
+    })();
+</script>
+</body>
+</html>
